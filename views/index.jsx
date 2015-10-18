@@ -28,6 +28,18 @@ var TodoList = React.createClass({
 });
 
 var Todo = React.createClass({
+    getInitialState: function() {
+        return {
+            checked: false
+        }
+    },
+    
+    handleChange: function(checked) {
+        this.setState({
+            checked: checked
+        });
+    },
+
     propTypes: {
         title: React.PropTypes.string.isRequired
     },
@@ -35,6 +47,13 @@ var Todo = React.createClass({
     render: function() {
         return (
             <tr>
+                <td style={{border: "1px solid black"}}>
+                    <input ref="checkBox"
+                           type="checkbox"
+                           checked={this.state.checked}
+                           onChange={this.handleChange}
+                    />
+                </td>
                 <td style={{border: "1px solid black"}}>{this.props.title}</td>
                 <td style={{border: "1px solid black"}}>{this.props.children}</td>
             </tr>
