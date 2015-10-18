@@ -58,11 +58,26 @@ var TodoList = React.createClass({
             detailValue: ""
         });
     },
+
+    deleteTodo: function(title) {
+        var newData = this.state.data.filter(function(todo) {
+            return todo.title !== title;
+        });
+        
+        this.setState({
+            data: newData
+        });
+    },    
     
     render: function() {
         var todo = this.props.data.map(function(object) {
-            return <Todo title={object.title} key={object.title}>{object.detail}</Todo>;
-        });
+            return <Todo title={object.title}
+                         key={object.title}
+                         onDelete={this.deleteTodo}
+                   >
+                {object.detail}
+            </Todo>;
+        }.bind(this));
         return (
             <div className="todoList">
                 <div>
@@ -89,6 +104,11 @@ var TodoList = React.createClass({
 });
 
 var Todo = React.createClass({
+    propTypes: {
+        title: React.PropTypes.string.isRequired,
+        onDelete: React.PropTypes.func.isRequired
+    },
+
     getInitialState: function() {
         return {
             checked: false,
@@ -111,13 +131,15 @@ var Todo = React.createClass({
         }
     },
 
-    propTypes: {
-        title: React.PropTypes.string.isRequired
+    _onDelete: function() {
+        this.props.onDelete(this.props.title);
     },
-    
     render: function() {
         return (
             <tr style={this.state.todoStyle}>
+                <td style={style.tableContent}>
+                    <button onClick={this._onDelete}>X</button>
+                </td>
                 <td style={style.tableContent}>
                     <input ref="checkBox"
                            type="checkbox"
