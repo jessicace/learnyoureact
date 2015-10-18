@@ -5,8 +5,8 @@ var TodoBox = React.createClass({
         return (
             <div className="todoBox">
                 <h1>Todos</h1>
-                <TodoList />
-                <TodoForm />
+                <TodoList/>
+                <TodoForm/>
             </div>
         );
     }
@@ -16,11 +16,18 @@ var TodoList = React.createClass({
     render: function() {
         return (
             <div className="todoList">
-                I am a TodoList.
+                <table style={{border: "2px solid black"}}>
+                    <tbody>
+                        <Todo title="Shopping">Milk</Todo>
+                        <Todo title="Hair cut">13:00</Todo>
+                    </tbody>
+                </table>
             </div>
         );
     }
 });
+
+
 
 var TodoForm = React.createClass({
     render: function() {
@@ -28,6 +35,17 @@ var TodoForm = React.createClass({
             <div className="todoForm">
                 I am a TodoForm.
             </div>
+        );
+    }
+});
+
+var Todo = React.createClass({
+    render: function() {
+        return (
+            <tr>
+                <td style={{border: "1px solid black"}}>{this.props.title}</td>
+                <td style={{border: "1px solid black"}}>{this.props.children}</td>
+            </tr>
         );
     }
 });
